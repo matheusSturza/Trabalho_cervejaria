@@ -28,9 +28,178 @@
         }
 
         public function listar(){
+            $vetor = [];
             $pstmt = $this->conexao->prepare("SELECT * FROM cerveja");
-
-             
+            $pstmt->execute();
+            while($linha = $pstmt->fetch()){
+                $vetor[] = new cerveja(
+                $linha["nome"],
+                $linha["ibu"],
+                $linha["data_fabri"],
+                $linha["fabricante"],
+                $linha["tipo"],
+                $linha["teor"],
+                $linha["local_degustado"],
+                $linha["avaliacao"],
+                $linha["comentarios"],
+                $linha["img"],
+                $linha["pais_origem"],
+                $linha["sugestao"],
+                null);
+            } 
+            return $vetor;
         }
+
+        public function ListarPais(){
+            $vetor = [];
+            $pstmt = $this->conexao->prepare("SELECT * FROM cerveja ORDER BY pais DESC");
+            $pstmt->execute();
+            while($linha = $pstmt->fetch()){
+                $vetor[] = new cerveja(
+                $linha["nome"],
+                $linha["ibu"],
+                $linha["data_fabri"],
+                $linha["fabricante"],
+                $linha["tipo"],
+                $linha["teor"],
+                $linha["local_degustado"],
+                $linha["avaliacao"],
+                $linha["comentarios"],
+                $linha["img"],
+                $linha["pais_origem"],
+                $linha["sugestao"],
+                null);
+            } 
+            return $vetor;
+        }
+
+        public function listarNome(){
+            $vetor = [];
+            $pstmt = $this->conexao->prepare("SELECT * FROM cerveja ORDER BY nome DESC");
+            $pstmt->execute();
+            while($linha = $pstmt->fetch()){
+                $vetor[] = new cerveja(
+                $linha["nome"],
+                $linha["ibu"],
+                $linha["data_fabri"],
+                $linha["fabricante"],
+                $linha["tipo"],
+                $linha["teor"],
+                $linha["local_degustado"],
+                $linha["avaliacao"],
+                $linha["comentarios"],
+                $linha["img"],
+                $linha["pais_origem"],
+                $linha["sugestao"],
+                null);
+            } 
+            return $vetor;
+        }
+
+        public function listarNota(){
+            $vetor = [];
+            $pstmt = $this->conexao->prepare("SELECT * FROM cerveja ORDER BY avalicao DESC");
+            $pstmt->execute();
+            while($linha = $pstmt->fetch()){
+                $vetor[] = new cerveja(
+                $linha["nome"],
+                $linha["ibu"],
+                $linha["data_fabri"],
+                $linha["fabricante"],
+                $linha["tipo"],
+                $linha["teor"],
+                $linha["local_degustado"],
+                $linha["avaliacao"],
+                $linha["comentarios"],
+                $linha["img"],
+                $linha["pais_origem"],
+                $linha["sugestao"],
+                null);
+            } 
+            return $vetor;
+        }
+
+        public function listarEstilo($tipo){
+            $vetor = [];
+            $pstmt = $this->conexao->prepare("SELECT * FROM cerveja WHERE tipo=:tipo");
+            $pstmt->bindValue(":tipo",$tipo);
+            $pstmt->execute();
+            while($linha = $pstmt->fetch()){
+                $vetor[] = new cerveja(
+                $linha["nome"],
+                $linha["ibu"],
+                $linha["data_fabri"],
+                $linha["fabricante"],
+                $linha["tipo"],
+                $linha["teor"],
+                $linha["local_degustado"],
+                $linha["avaliacao"],
+                $linha["comentarios"],
+                $linha["img"],
+                $linha["pais_origem"],
+                $linha["sugestao"],
+                null);
+            } 
+            return $vetor;
+        }
+
+        public function listarAvalicao($aval){
+            $vetor = [];
+            $pstmt = $this->conexao->prepare("SELECT * FROM cerveja WHERE avaliacao=:avaliacao");
+            $pstmt->bindValue(":avaliacao",$aval);
+            $pstmt->execute();
+            while($linha = $pstmt->fetch()){
+                $vetor[] = new cerveja(
+                $linha["nome"],
+                $linha["ibu"],
+                $linha["data_fabri"],
+                $linha["fabricante"],
+                $linha["tipo"],
+                $linha["teor"],
+                $linha["local_degustado"],
+                $linha["avaliacao"],
+                $linha["comentarios"],
+                $linha["img"],
+                $linha["pais_origem"],
+                $linha["sugestao"],
+                null);
+            } 
+            return $vetor;
+        }
+
+        public function listarData($data){
+            $vetor = [];
+            $pstmt = $this->conexao->prepare("SELECT * FROM cerveja WHERE data_fabri=:data_fabri");
+            $pstmt->bindValue(":data_fabri",$data);
+            $pstmt->execute();
+            while($linha = $pstmt->fetch()){
+                $vetor[] = new cerveja(
+                $linha["nome"],
+                $linha["ibu"],
+                $linha["data_fabri"],
+                $linha["fabricante"],
+                $linha["tipo"],
+                $linha["teor"],
+                $linha["local_degustado"],
+                $linha["avaliacao"],
+                $linha["comentarios"],
+                $linha["img"],
+                $linha["pais_origem"],
+                $linha["sugestao"],
+                null);
+            } 
+            return $vetor;
+        }
+
+        public function listarImgs() { 
+        $lista = []; 
+        $sql = "SELECT img FROM cerveja WHERE img IS NOT NULL"; $stmt = $this->conexao->query($sql);
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+            $lista[] = $row['img'];
+        }
+
+        return $lista;
+        } 
     }
 ?>
