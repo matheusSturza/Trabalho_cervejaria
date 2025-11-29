@@ -201,5 +201,53 @@
 
         return $lista;
         } 
+
+        public function getDegustacoesPorMes() {
+            $vetor = [];
+            
+            $pstmt = $this->conexao->prepare(
+                "SELECT 
+                    MONTH(data_fabri) as mes_numero,
+                    MONTHNAME(data_fabri) as mes_nome,
+                    COUNT(*) as total_degustacoes
+                FROM cerveja 
+                GROUP BY MONTH(data_fabri), MONTHNAME(data_fabri)
+                ORDER BY mes_numero"
+            );
+            
+            $pstmt->execute();
+            
+            while($linha = $pstmt->fetch(PDO::FETCH_ASSOC)) {
+                $vetor[] = [
+                    'mes_numero' => $linha['mes_numero'],
+                    'mes_nome' => $linha['mes_nome'],
+                    'total_degustacoes' => $linha['total_degustacoes']
+                ];
+            }
+            
+            return $vetor;
+        }
+
+        public function listarMediaNotasPorTipo() {
+            $vetor = [];
+            
+            $pstmt = $this->conexao->prepare(
+                "SELECT tipo, AVG(avaliacao) as media_nota 
+                FROM cerveja 
+                GROUP BY tipo 
+                ORDER BY media_nota DESC"
+            );
+            
+            $pstmt->execute();
+            
+            while($linha = $pstmt->fetch(PDO::FETCH_ASSOC)) {
+                $vetor[] = [
+                    'tipo' => $linha['tipo'],
+                    'media_nota' => $linha['media_nota']
+                ];
+            }
+            
+            return $vetor;
+        }
     }
 ?>
