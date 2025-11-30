@@ -10,45 +10,56 @@
         }
 
         public function inserir(Cerveja $cerveja){        
-            $pstmt = $this->conexao->prepare("INSERT INTO cerveja (nome, ibu, data_fabri, fabricante, tipo,local_degustado, 
-            avalicao, comentarios, img, pais_origem, teor) VALUES (:nome, :ibu, :data_fabri, :fabricante, :tipo, 
-            :local_degustado, :avalicao, :comentarios, :img, :pais_origem, :teor)");
-            $pstmt->bindValue(":nome", $cerveja->getNome());
-            $pstmt->bindValue(":ibu", $cerveja->getIbu());
-            $pstmt->bindValue(":data_fabri", $cerveja->getData());
-            $pstmt->bindValue(":fabricante", $cerveja->getFabricante());
-            $pstmt->bindValue(":tipo", $cerveja->getTipo());
-            $pstmt->bindValue(":teor", $cerveja->getTeor());
-            $pstmt->bindValue(":local_degustado", $cerveja->getLocal());
-            $pstmt->bindValue(":avaliacao", $cerveja->getAvalicao());
-            $pstmt->bindValue(":comentarios", $cerveja->getComentarios());
-            $pstmt->bindValue(":img", $cerveja->getImg());
-            $pstmt->bindValue(":pais_origem", $cerveja->getPais_origem());
-            $pstmt->execute();
-        }
+    $pstmt = $this->conexao->prepare(
+        "INSERT INTO cerveja (
+            nome, ibu, data_fabri, fabricante, tipo, local_degustado, 
+            avaliacao, comentarios, img, pais_origem, teor
+        ) VALUES (
+            :nome, :ibu, :data_fabri, :fabricante, :tipo, :local_degustado,
+            :avaliacao, :comentarios, :img, :pais_origem, :teor
+        )"
+    );
 
-        public function listar(){
-            $vetor = [];
-            $pstmt = $this->conexao->prepare("SELECT * FROM cerveja");
-            $pstmt->execute();
-            while($linha = $pstmt->fetch()){
-                $vetor[] = new cerveja(
-                $linha["nome"],
-                $linha["ibu"],
-                $linha["data_fabri"],
-                $linha["fabricante"],
-                $linha["tipo"],
-                $linha["teor"],
-                $linha["local_degustado"],
-                $linha["avaliacao"],
-                $linha["comentarios"],
-                $linha["img"],
-                $linha["pais_origem"],
-                $linha["sugestao"],
-                null);
-            } 
-            return $vetor;
-        }
+    $pstmt->bindValue(":nome", $cerveja->getNome());
+    $pstmt->bindValue(":ibu", $cerveja->getIbu());
+    $pstmt->bindValue(":data_fabri", $cerveja->getData());
+    $pstmt->bindValue(":fabricante", $cerveja->getFabricante());
+    $pstmt->bindValue(":tipo", $cerveja->getTipo());
+    $pstmt->bindValue(":local_degustado", $cerveja->getLocal());
+    $pstmt->bindValue(":avaliacao", $cerveja->getAvaliacao());
+    $pstmt->bindValue(":comentarios", $cerveja->getComentarios());
+    $pstmt->bindValue(":img", $cerveja->getImg());
+    $pstmt->bindValue(":pais_origem", $cerveja->getPais_origem());
+    $pstmt->bindValue(":teor", $cerveja->getTeor());
+
+    $pstmt->execute();
+}
+
+
+       public function listar() {
+    $vetor = [];
+    $pstmt = $this->conexao->prepare("SELECT * FROM cerveja");
+    $pstmt->execute();
+
+    while ($linha = $pstmt->fetch(PDO::FETCH_ASSOC)) {
+        $vetor[] = new Cerveja([
+            "nome" => $linha["nome"],
+            "ibu" => $linha["ibu"],
+            "data_fabri" => $linha["data_fabri"],
+            "fabricante" => $linha["fabricante"],
+            "tipo" => $linha["tipo"],
+            "teor" => $linha["teor"],
+            "local_degustado" => $linha["local_degustado"],
+            "avaliacao" => $linha["avaliacao"],
+            "comentarios" => $linha["comentarios"],
+            "img" => $linha["img"],
+            "pais_origem" => $linha["pais_origem"]
+        ]);
+    }
+
+    return $vetor;
+}
+
 
         public function ListarPais(){
             $vetor = [];
