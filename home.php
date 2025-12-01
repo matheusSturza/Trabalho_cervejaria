@@ -25,7 +25,7 @@ session_start();
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
         <li class="nav-item">
-            <a class="nav-link active text-white" href="home.php">Home</a>
+            <a class="nav-link active text-danger" href="home.php">Home</a>
         </li>
 
         <li class="nav-item">
@@ -45,6 +45,10 @@ session_start();
 
         <li class="nav-item">
             <a class="nav-link text-white" href="TelaListarRotulo.php">Galeria de Rótulos</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link text-white" href="TelaRelatorio.php">Relatório</a>
         </li>
 
       </ul>

@@ -9,7 +9,7 @@ include_once("Cerveja.php");
 include_once("CervejaDAO.php");
 
 $dao = new CervejaDAO();
-$cervejas = $dao->listar(); // pega todas as cervejas
+$cervejas = $dao->listar();
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +40,10 @@ $cervejas = $dao->listar(); // pega todas as cervejas
         <li class="nav-item"><a class="nav-link text-white" href="TelaEditarUsuario.php?email=<?= $_SESSION['email_logado'] ?>">Editar Perfil</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="TelaCadastrarCerveja.php">Cadastrar Cerveja</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="TelaListaCerveja.php">Listar Cervejas</a></li>
-        <li class="nav-item"><a class="nav-link active text-white" href="TelaListarRotulo.php">Galeria de Rótulos</a></li>
+        <li class="nav-item"><a class="nav-link active text-danger" href="TelaListarRotulo.php">Galeria de Rótulos</a></li>
+         <li class="nav-item">
+            <a class="nav-link text-white" href="TelaRelatorio.php">Relatório</a>
+        </li>
       </ul>
       <a href="index.php" class="btn btn-danger">Sair</a>
     </div>

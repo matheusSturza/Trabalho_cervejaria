@@ -4,7 +4,6 @@ include_once("Usuario.php");
 
 class UsuarioDAO{
     private $conexao;
-
     public function __construct(){
         $this->conexao = Conexao::getConexao();
     }
@@ -45,7 +44,7 @@ class UsuarioDAO{
         $linha = $pstmt->fetch(PDO::FETCH_ASSOC);
 
         if($linha){
-            return $linha; // retorna os dados do usuário
+            return $linha;
         } else {
             return false;
         }

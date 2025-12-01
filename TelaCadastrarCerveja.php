@@ -5,7 +5,6 @@ if (!isset($_SESSION['usuario'])) {
     exit;
 }
 
-
 require_once "Cerveja.php";
 require_once "CervejaDAO.php";
 require_once "conexao.php";
@@ -65,9 +64,12 @@ if (isset($_POST["btSalva"])) {
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link text-white" href="home.php">Home</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="TelaEditarUsuario.php?email=<?= $_SESSION['email_logado'] ?>">Editar Perfil</a></li>
-        <li class="nav-item"><a class="nav-link active text-white" href="CadastrarCerveja.php">Cadastrar Cerveja</a></li>
+        <li class="nav-item"><a class="nav-link active text-danger" href="CadastrarCerveja.php">Cadastrar Cerveja</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="TelaListaCerveja.php">Listar Cervejas</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="TelaListarRotulo.php">Galeria de Rótulos</a></li>
+         <li class="nav-item">
+            <a class="nav-link text-white" href="TelaRelatorio.php">Relatório</a>
+        </li>
       </ul>
 
       <a href="index.php" class="btn btn-danger">Sair</a>

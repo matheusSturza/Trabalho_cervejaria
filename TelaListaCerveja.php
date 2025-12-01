@@ -9,8 +9,26 @@ include_once("Cerveja.php");
 include_once("CervejaDAO.php");
 
 $dao = new CervejaDAO();
-$cervejas = $dao->listar();
 
+$ordem = $_GET['ordem'] ?? 'padrao';
+
+switch ($ordem) {
+    case 'nome':
+        $cervejas = $dao->listarNome();
+        break;
+
+    case 'pais':
+        $cervejas = $dao->ListarPais();
+        break;
+
+    case 'avaliacao':
+        $cervejas = $dao->listarNota();
+        break;
+
+    default:
+        $cervejas = $dao->listar();
+        break;
+}
 ?>
 
 <!DOCTYPE html>
@@ -21,6 +39,7 @@ $cervejas = $dao->listar();
 <title>Lista de Cervejas</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body data-bs-theme="dark" class="bg-dark text-white">
 
 <nav class="navbar navbar-expand-lg bg-dark border-bottom border-danger">
@@ -29,13 +48,17 @@ $cervejas = $dao->listar();
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="menu">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item"><a class="nav-link text-white" href="home.php">Home</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="TelaEditarUsuario.php?email=<?= $_SESSION['email_logado'] ?>">Editar Perfil</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="TelaCadastrarCerveja.php">Cadastrar Cerveja</a></li>
-        <li class="nav-item"><a class="nav-link active text-white" href="TelaListaCerveja.php">Listar Cervejas</a></li>
+        <li class="nav-item"><a class="nav-link active text-danger" href="TelaListaCerveja.php">Listar Cervejas</a></li>
         <li class="nav-item"><a class="nav-link text-white" href="TelaListarRotulo.php">Galeria de Rótulos</a></li>
+         <li class="nav-item">
+            <a class="nav-link text-white" href="TelaRelatorio.php">Relatório</a>
+        </li>
       </ul>
       <a href="index.php" class="btn btn-danger">Sair</a>
     </div>
@@ -44,7 +67,16 @@ $cervejas = $dao->listar();
 
 <div class="container mt-5">
     <h3 class="text-center mb-4 text-danger fw-bold">Lista de Cervejas</h3>
-    
+
+    <form method="GET" class="mb-4 w-25">
+        <select name="ordem" class="form-select" onchange="this.form.submit()">
+            <option value="padrao" <?= $ordem=='padrao'?'selected':'' ?>>Ordenar por...</option>
+            <option value="nome" <?= $ordem=='nome'?'selected':'' ?>>Nome</option>
+            <option value="pais" <?= $ordem=='pais'?'selected':'' ?>>País</option>
+            <option value="avaliacao" <?= $ordem=='avaliacao'?'selected':'' ?>>Avaliação</option>
+        </select>
+    </form>
+
     <div class="table-responsive">
         <table class="table table-dark table-striped table-bordered align-middle text-center">
             <thead class="table-danger text-dark">
@@ -61,6 +93,7 @@ $cervejas = $dao->listar();
                     <th>Comentários</th>
                 </tr>
             </thead>
+
             <tbody>
                 <?php if(count($cervejas) > 0): ?>
                     <?php foreach($cervejas as $c): ?>
@@ -83,6 +116,7 @@ $cervejas = $dao->listar();
                     </tr>
                 <?php endif; ?>
             </tbody>
+
         </table>
     </div>
 </div>
